@@ -19,7 +19,7 @@ curl -o records.json -X GET "https://api.cloudflare.com/client/v4/zones/$ZONE/dn
 
 
 N=$(jq -r '.result | length' records.json)
-for i in {0..100}
+for i in {0..65}
 do
 
 	IP=$(jq -r .result[$i].content records.json) && RE=$(nmap -p 22 $IP)
