@@ -22,7 +22,7 @@ N=$(jq -r '.result | length' records.json)
 for i in {0..65}
 do
 
-	IP=$(jq -r .result[$i].content records.json) && RE=$(telnet $IP 22)&&echo "$IP Is in progress"
+	IP=$(jq -r .result[$i].content records.json) &&echo "$IP Is in progress" && RE=$(telnet $IP 22)
 
 		if [[ " $RE " =~ "Unable to connect" ]]; 
 		then
