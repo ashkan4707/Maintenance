@@ -33,5 +33,5 @@ do
 		then
  			echo "$IP removed" && RECORDID=$(jq -r .result[$i].id records.json)&&echo "$RECORDID request sent #2"
 		fi
-
+		exit 1
 done
