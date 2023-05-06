@@ -51,7 +51,7 @@ curl --request PUT \
   --header 'X-Auth-Key: $api_secret_id' \
   --data '{
   "content": "$domain1",
-  "name": "@",
+  "name": "bridge",
   "proxied": false,
   "type": "CNAME",
   "comment": "Last change $system_time",
@@ -82,7 +82,7 @@ curl --request PUT \
   --header 'X-Auth-Key: $api_secret_id' \
   --data '{
   "content": "$domain2",
-  "name": "@",
+  "name": "bridge",
   "proxied": false,
   "type": "CNAME",
   "comment": "Last change $system_time",
@@ -113,7 +113,7 @@ curl --request PUT \
   --header 'X-Auth-Key: $api_secret_id' \
   --data '{
   "content": "$domain3",
-  "name": "@",
+  "name": "bridge",
   "proxied": false,
   "type": "CNAME",
   "comment": "Last change $system_time",
