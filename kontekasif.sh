@@ -16,6 +16,8 @@ else
   read -p "Enter domain1: " domain1
   read -p "Enter domain2: " domain2
   read -p "Enter domain3: " domain3
+  read -p "Enter domain4: " domain4
+  read -p "Enter domain5: " domain5
   read -p "Enter zone identifier: " zone_identifier
   read -p "Enter cname identifier: " cname_identifier
   read -p "Enter email: " email
@@ -27,6 +29,8 @@ time_interval=$time_interval
 domain1=$domain1
 domain2=$domain2
 domain3=$domain3
+domain4=$domain4
+domain5=$domain5
 zone_identifier=$zone_identifier
 cname_identifier=$cname_identifier
 email=$email
@@ -131,4 +135,71 @@ EOF
 
   # Wait for the time interval
   sleep "$time_interval"
+  # Get the system time
+  system_time=$(date '+%Y-%m-%d %H:%M:%S')
+-------------------------------------------
+   # Create the curl for domain4
+  curl_domain4=$(cat << EOF
+curl --request PUT \
+  --url https://api.cloudflare.com/client/v4/zones/$zone_identifier/dns_records/$cname_identifier \
+  --header 'Content-Type: application/json' \
+  --header 'X-Auth-Email: $email' \
+  --header 'X-Auth-Key: $api_secret_id' \
+  --data '{
+  "content": "$domain4",
+  "name": "bridge",
+  "proxied": false,
+  "type": "CNAME",
+  "comment": "Last change $system_time",
+  "ttl": 1
+}'
+EOF
+)
+
+  # Log the curl command for domain4
+  echo "[$system_time] Executing curl command for domain4: $curl_domain4" >> "$log_file"
+
+  # Execute the curl command for domain4 and log the response
+  curl_response_domain4=$(eval "$curl_domain4")
+  echo "[$system_time] Response for domain4: $curl_response_domain4" >> "$log_file"
+
+  # Wait for the time interval
+  sleep "$time_interval"
+
+# Get the system time
+  system_time=$(date '+%Y-%m-%d %H:%M:%S')
+---------------------------------------------------
+ # Create the curl for domain5
+  curl_domain5=$(cat << EOF
+curl --request PUT \
+  --url https://api.cloudflare.com/client/v4/zones/$zone_identifier/dns_records/$cname_identifier \
+  --header 'Content-Type: application/json' \
+  --header 'X-Auth-Email: $email' \
+  --header 'X-Auth-Key: $api_secret_id' \
+  --data '{
+  "content": "$domain5",
+  "name": "bridge",
+  "proxied": false,
+  "type": "CNAME",
+  "comment": "Last change $system_time",
+  "ttl": 1
+}'
+EOF
+)
+
+  # Log the curl command for domain5
+  echo "[$system_time] Executing curl command for domain5: $curl_domain5" >> "$log_file"
+
+  # Execute the curl command for domain5 and log the response
+  curl_response_domain5=$(eval "$curl_domain1")
+  echo "[$system_time] Response for domain1: $curl_response_domain5" >> "$log_file"
+
+  # Wait for the time interval
+  sleep "$time_interval"
+
+# Get the system time
+  system_time=$(date '+%Y-%m-%d %H:%M:%S')
+
 done >> kontekasiflogs 2>&1 &
+
+
